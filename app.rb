@@ -4,6 +4,8 @@ require_relative "app/repositories/customer_repository"
 require_relative "app/controllers/customers_controller"
 require_relative "app/repositories/employee_repository"
 require_relative "app/controllers/sessions_controller"
+require_relative "app/repositories/order_repository"
+require_relative "app/controllers/orders_controller"
 require_relative "router"
 # csv_file = "data/meals.csv"
 
@@ -19,6 +21,10 @@ employee_csv = File.join(__dir__, "data/employees.csv")
 employee_repository = EmployeeRepository.new(employee_csv)
 sessions_controller = SessionsController.new(employee_repository)
 
-router = Router.new(meals_controller, customers_controller, sessions_controller)
+csv_file = File.join(__dir__, "data/orders.csv")
+order_repository = OrderRepository.new(csv_file, meal_repository, customer_repository, employee_repository)
+orders_controller = OrdersController.new(meal_repository, customer_repository, employee_repository, order_repository)
+
+router = Router.new(meals_controller, customers_controller, sessions_controller, orders_controller)
 router.run
 # p meal_repository
