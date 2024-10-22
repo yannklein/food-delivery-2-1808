@@ -13,6 +13,10 @@ class MealRepository
     @meals
   end
 
+  def find(id)
+    @meals.find { |meal| meal.id == id }
+  end
+
   def create(meal)
     meal.id = @next_id
     @meals << meal
@@ -43,7 +47,7 @@ class MealRepository
 
   def save_csv
     CSV.open(@csv_file_path, "wb") do |csv|
-      csv << %w(id, name, price)
+      csv << %w(id name price)
       @meals.each do |meal|
         csv << [meal.id, meal.name, meal.price]
       end

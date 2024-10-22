@@ -1,9 +1,9 @@
-require_relative "../views/meal_view"
+require_relative "../views/meals_view"
 
 class MealsController
   def initialize(meal_repository)
     @meal_repository = meal_repository
-    @meal_view = MealView.new
+    @meal_view = MealsView.new
   end
 
   def list
@@ -17,7 +17,7 @@ class MealsController
     # ask the user for the meal name and store it
     name = @meal_view.ask_for("name")
     # ask the user for the meal price and store it
-    price = @meal_view.ask_for("price")
+    price = @meal_view.ask_for("price").to_i
     # create a new meal instance
     meal = Meal.new(name: name, price: price)
     # ask the repository to store the instance
